@@ -111,11 +111,11 @@ func (cc *CoAPInEndResource) Driver() typex.XExternalDriver {
 	return nil
 }
 
-func (*CoAPInEndResource) Configs() []typex.XConfig {
-	config, err := core.RenderConfig(coAPConfig{})
+func (*CoAPInEndResource) Configs() typex.XConfig {
+	config, err := core.RenderConfig("COAP", "", coAPConfig{})
 	if err != nil {
 		log.Error(err)
-		return []typex.XConfig{}
+		return typex.XConfig{}
 	} else {
 		return config
 	}

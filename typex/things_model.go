@@ -46,21 +46,9 @@ type XDataModel struct {
 // 前端可以拿来渲染界面(from v0.0.2)
 //
 //
-type ConfigType string
-
-const (
-	T_INPUT    ModelType = iota //HTML input tag
-	T_SELECT                    //HTML select tag
-	T_RADIO                     //HTML radio tag
-	T_SWITCH                    //HTML switch tag
-	T_CHECKBOX                  //HTML checkbox tag
-)
 
 type XConfig struct {
-	Field     string      `json:"field"`     // 字段名
-	Multiple  bool        `json:"multiple"`  // 是否是多个
-	FieldType string      `json:"fieldType"` // 字段类型
-	Title     string      `json:"title"`     // 标题
-	Info      string      `json:"info"`      // 提示信息
-	Enum      interface{} `json:"enum"`      // 枚举，一般用来实现Select
+	Type    string        `json:"type"`    // 类型
+	HelpTip string        `json:"helpTip"` // 关于这个配置的简介和帮助信息
+	Views   []interface{} `json:"view"`    // 枚举，一般用来实现Select
 }
