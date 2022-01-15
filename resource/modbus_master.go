@@ -18,12 +18,12 @@ import (
 	"github.com/mitchellh/mapstructure"
 )
 
-type ModBusConfig struct {
-	Mode           string          `json:"mode" title:"工作模式" info:"可以在 RTU/TCP 两个模式之间切换"`
+type modBusConfig struct {
+	Mode           string          `json:"mode" title:"工作模式" info:"RTU/TCP"`
 	Timeout        int             `json:"timeout" validate:"required" title:"连接超时" info:""`
 	SlaverId       byte            `json:"slaverId" validate:"required" title:"TCP端口" info:""`
 	Frequency      int64           `json:"frequency" validate:"required" title:"采集频率" info:""`
-	Config         interface{}     `json:"config" validate:"required" title:"工作模式配置" info:""`
+	Config         interface{}     `json:"config" validate:"required" title:"工作模式" info:""`
 	RegisterParams []registerParam `json:"registerParams" validate:"required" title:"寄存器配置" info:""`
 }
 
@@ -164,7 +164,7 @@ func NewModbusMasterResource(id string, e typex.RuleX) typex.XResource {
 	return &m
 }
 func (*ModbusMasterResource) Configs() typex.XConfig {
-	config, err := core.RenderConfig("MODBUS_MASTER", "", ModBusConfig{})
+	config, err := core.RenderConfig("MODBUS_MASTER", "", modBusConfig{})
 	if err != nil {
 		log.Error(err)
 		return typex.XConfig{}
@@ -181,7 +181,7 @@ func (m *ModbusMasterResource) Register(inEndId string) error {
 func (m *ModbusMasterResource) Start() error {
 
 	config := m.RuleEngine.GetInEnd(m.PointId).Config
-	var mainConfig ModBusConfig
+	var mainConfig modBusConfig
 	if err := utils.BindResourceConfig(config, &mainConfig); err != nil {
 		return err
 	}
